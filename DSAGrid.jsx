@@ -6,41 +6,40 @@ import Grid from '@material-ui/core/Grid';
 const styles = {
   root: {
     flexGrow: 1,
+    padding: 24
   }
 };
 
 function DSAGridPure(props) {
   const { classes, children } = props;
   return (
-    <Grid container
-      justify="center"
-      alignItems="center"
-      spacing={16}
-      className={classes.root}>
-      {children}
-    </Grid>
+    <div className={classes.root}>
+      <Grid container
+        spacing={24}>
+        {children}
+      </Grid>
+    </div>
   );
 }
 
 function DSAGridItemPure(props) {
-  const { classes, children, xs, sm, md, lg, xl } = props;
+  const { children, xs, sm, md, lg, xl } = props;
   return (
     <Grid item
       xs={xs}
       sm={sm}
       md={md}
       lg={lg}
-      xl={xl}
-      className={classes.root}>
+      xl={xl}>
       {children}
     </Grid>
   );
 }
 
 function DSAGridRowPure(props) {
-  const { classes, children} = props;
+  const { children} = props;
   return (
-    <Grid item xs={12} className={classes.root}>
+    <Grid item xs={12}>
       {children}
     </Grid>
   );
