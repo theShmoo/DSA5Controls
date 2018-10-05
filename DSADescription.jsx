@@ -13,7 +13,7 @@ const styles = {
 };
 
 function DSADescription(props) {
-  const { classes, caption, text } = props;
+  const { classes, caption, text, children } = props;
   return (
     <div className={classes.root}>
       <Typography variant="caption" color="secondary" gutterBottom className={classes.flex}>
@@ -21,6 +21,7 @@ function DSADescription(props) {
       </Typography>
       <Typography gutterBottom className={classes.flex}>
         {text}
+        {children}
       </Typography>
     </div>
   );
