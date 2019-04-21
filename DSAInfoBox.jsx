@@ -15,7 +15,7 @@ function DSADescription(props) {
   const { classes, children, title, text } = props;
   return (
     <Paper square elevation={4} className={classes.root}>
-      {title && <Typography variant="headline" component="h3">{title}</Typography>}
+      {title && <Typography variant="h5" component="h3">{title}</Typography>}
       {text && <Typography component="p">{text}</Typography>}
       {children}
     </Paper>

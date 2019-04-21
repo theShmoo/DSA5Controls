@@ -29,8 +29,7 @@ function DSADescription(props) {
 
 DSADescription.propTypes = {
   classes: PropTypes.object.isRequired,
-  caption: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired
+  caption: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(DSADescription);
