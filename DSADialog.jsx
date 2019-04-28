@@ -18,7 +18,7 @@ function Transition(props) {
 };
 
 function DSADialog(props) {
-  const { classes, handleClose, open, title, actions, children } = props;
+  const { classes, handleClose, open, title, actions, text, children } = props;
   return (
     <Dialog
       classes={classes}
@@ -35,8 +35,9 @@ function DSADialog(props) {
         : ""}
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">
-          {children}
+          {text}
         </DialogContentText>
+        {children}
       </DialogContent>
       {actions ? <DialogActions>
           {actions}

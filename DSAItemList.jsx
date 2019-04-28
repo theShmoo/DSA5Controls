@@ -25,11 +25,11 @@ class DSAItemList extends React.Component {
     closed: []
   };
 
-  handleClick = (name) => {
+  handleClick = (id) => {
     let closed = this.state.closed;
-    const i = closed.indexOf(name);
+    const i = closed.indexOf(id);
     if(i < 0)
-      closed.push(name);
+      closed.push(id);
     else
       closed.splice(i, 1);
     this.setState({ closed: closed });
@@ -39,10 +39,10 @@ class DSAItemList extends React.Component {
     const {classes} = this.props
     return items.map((l, i) => {
       if(l.items !== undefined) {
-        const closed = !this.state.closed.includes(l.title);
+        const closed = !this.state.closed.includes(i);
         return (
           <div key={i}>
-            <ListItem button dense={true} onClick={() => this.handleClick(l.title)}>
+            <ListItem button dense={true} onClick={() => this.handleClick(i)}>
               <ListItemText secondary={l.subtitle}>{l.title}</ListItemText>
               {closed ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
