@@ -6,9 +6,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
   root: {
@@ -18,6 +20,13 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 2,
   }
 });
+
+function LeafItem(props) {
+  const {item} = props;
+  return (<ListItem dense={true} divider={true} button onClick={item.action}>
+        <ListItemText secondary={item.name}>{item.value}</ListItemText>
+      </ListItem>);
+}
 
 class DSAItemList extends React.Component {
 
@@ -35,6 +44,15 @@ class DSAItemList extends React.Component {
     this.setState({ closed: closed });
   };
 
+  renderLeafItem(item) {
+    if(item.tooltip)
+      return <Tooltip title={item.tooltip}>
+        <LeafItem item={item} aria-label={item.tooltip}/>
+      </Tooltip>
+    else
+      return <LeafItem item={item}/>
+  }
+
   renderItems(items) {
     const {classes} = this.props
     return items.map((l, i) => {
@@ -43,7 +61,9 @@ class DSAItemList extends React.Component {
         return (
           <div key={i}>
             <ListItem button dense={true} onClick={() => this.handleClick(i)}>
-              <ListItemText secondary={l.subtitle}>{l.title}</ListItemText>
+              <ListItemText secondary={l.subtitle}>
+                <Typography variant="subtitle2" gutterBottom>{l.title}</Typography>
+              </ListItemText>
               {closed ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Collapse in={closed} timeout="auto" unmountOnExit className={classes.nested}>
@@ -53,9 +73,7 @@ class DSAItemList extends React.Component {
         );
       }
       else {
-      return (<ListItem key={i} dense={true} divider={true}>
-        <ListItemText secondary={l.name}>{l.value}</ListItemText>
-      </ListItem>);
+        return <div key={i}> {this.renderLeafItem(l)} </div>;
       }
     });
   }
@@ -63,7 +81,7 @@ class DSAItemList extends React.Component {
   render() {
     const { classes, items, title } = this.props;
     return (
-      <List component="div" dense={true} disablePadding={true} className={classes.root}>
+      <List dense={true} disablePadding={true} className={classes.root}>
         {title && <ListSubheader>{title}</ListSubheader>}
         {this.renderItems(items)}
       </List>

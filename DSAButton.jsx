@@ -4,8 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
-  root : {
-  }
+  root : {}
 });
 
 function DSAButton(props) {
@@ -22,7 +21,11 @@ function DSAButton(props) {
 }
 
 DSAButton.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+};
+
+DSAButton.defaultTypes = {
+  size: "small",
 };
 
 export default withStyles(styles)(DSAButton);

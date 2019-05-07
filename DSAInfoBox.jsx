@@ -11,7 +11,7 @@ const styles = theme => ({
   }
 });
 
-function DSADescription(props) {
+function DSAInfoBox(props) {
   const { classes, children, title, text } = props;
   return (
     <Paper square elevation={4} className={classes.root}>
@@ -22,9 +22,9 @@ function DSADescription(props) {
   );
 }
 
-DSADescription.propTypes = {
+DSAInfoBox.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string,
 };
 
-export default withStyles(styles)(DSADescription);
+export default withStyles(styles)(DSAInfoBox);
