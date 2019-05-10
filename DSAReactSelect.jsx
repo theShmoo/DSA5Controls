@@ -174,6 +174,7 @@ class DSAReactSelect extends React.Component {
       onChange,
       selected,
       placeholder,
+      label,
       name,
       multi
     } = this.props;
@@ -195,7 +196,7 @@ class DSAReactSelect extends React.Component {
             classes={classes}
             styles={selectStyles}
             textFieldProps={{
-              label: 'Label',
+              label: label,
               InputLabelProps: {
                 shrink: true,
               },

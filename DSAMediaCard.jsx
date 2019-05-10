@@ -21,7 +21,14 @@ const styles = theme => ({
 });
 
 function DSAMediaCard(props) {
-  const { classes, imagesrc, imagetitle, title, content, actions } = props;
+  const { classes,
+    imagesrc,
+    imagetitle,
+    title,
+    content,
+    actions,
+    children } = props;
+
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -36,6 +43,7 @@ function DSAMediaCard(props) {
         <Typography component="p">
           {content}
         </Typography>
+        {children}
       </CardContent>
       { actions &&
         <CardActions>

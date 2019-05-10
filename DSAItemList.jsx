@@ -54,10 +54,11 @@ class DSAItemList extends React.Component {
   }
 
   renderItems(items) {
-    const {classes} = this.props
+    const {classes, collapse} = this.props
     return items.map((l, i) => {
       if(l.items !== undefined) {
-        const closed = !this.state.closed.includes(i);
+        const collapseClicked = this.state.closed.includes(i)
+        const closed = collapse ? collapseClicked : !collapseClicked;
         return (
           <div key={i}>
             <ListItem button dense={true} onClick={() => this.handleClick(i)}>

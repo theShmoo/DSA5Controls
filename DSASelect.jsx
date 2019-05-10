@@ -20,7 +20,7 @@ const styles = theme => ({
 class DSASelect extends React.Component {
 
   render() {
-    const { classes, helperText, onChange, value, label, options, multi } = this.props;
+    const { classes, helperText, onChange, value, label, placeholder, options, multi } = this.props;
     const selectedValues = options.filter(o => value.includes(o.value))
     const helperId = label + "-helper";
     return (
@@ -31,7 +31,8 @@ class DSASelect extends React.Component {
             onChange={onChange}
             name={helperId}
             options={options}
-            placeholder={label}
+            label={label}
+            placeholder={placeholder}
             multi={multi}
           />
           <FormHelperText>{helperText}</FormHelperText>
