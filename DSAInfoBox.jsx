@@ -23,8 +23,7 @@ function DSAInfoBox(props) {
 }
 
 DSAInfoBox.propTypes = {
-  classes: PropTypes.object.isRequired,
-  title: PropTypes.string,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(DSAInfoBox);
