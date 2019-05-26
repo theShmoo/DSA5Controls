@@ -8,15 +8,12 @@ const styles = theme => ({
 });
 
 function DSAButton(props) {
-  const { classes, onClick, size, children } = props;
+  const { classes } = props;
   return (
     <Button
       color="primary"
-      onClick={onClick}
-      size={size}
-      className={classes.root}>
-      {children}
-    </Button>
+      className={classes.root}
+      {...props} />
   );
 }
 
