@@ -14,10 +14,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
   root: {
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
   },
   nested: {
-    paddingLeft: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing(2),
   }
 });
 

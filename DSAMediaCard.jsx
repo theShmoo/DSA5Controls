@@ -16,7 +16,7 @@ const styles = theme => ({
     paddingTop: '56.25%', // 16:9
   },
   content: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
 });
 
