@@ -1,8 +1,8 @@
 import React from 'react';
+import clsx from 'clsx';
 import Select from 'react-select';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import NoSsr from '@material-ui/core/NoSsr';
 import TextField from '@material-ui/core/TextField';
@@ -12,13 +12,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
+    height: 'auto',
   },
   input: {
     display: 'flex',
     padding: 0,
+    height: 'auto',
   },
   valueContainer: {
     display: 'flex',
@@ -28,7 +30,7 @@ const styles = theme => ({
     overflow: 'hidden',
   },
   chip: {
-    margin: `${theme.spacing(0.5)}px ${theme.spacing(0.25)}px`,
+    margin: theme.spacing(0.5, 0.25),
   },
   chipFocused: {
     backgroundColor: emphasize(
@@ -37,7 +39,7 @@ const styles = theme => ({
     ),
   },
   noOptionsMessage: {
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    padding: theme.spacing(1, 2),
   },
   singleValue: {
     fontSize: 16,
@@ -45,6 +47,7 @@ const styles = theme => ({
   placeholder: {
     position: 'absolute',
     left: 2,
+    bottom: 6,
     fontSize: 16,
   },
   paper: {
@@ -57,7 +60,7 @@ const styles = theme => ({
   divider: {
     height: theme.spacing(2),
   },
-});
+}));
 
 function NoOptionsMessage(props) {
   return (
@@ -71,9 +74,19 @@ function NoOptionsMessage(props) {
   );
 }
 
+NoOptionsMessage.propTypes = {
+  children: PropTypes.node,
+  innerProps: PropTypes.object,
+  selectProps: PropTypes.object.isRequired,
+};
+
 function inputComponent({ inputRef, ...props }) {
   return <div ref={inputRef} {...props} />;
 }
+
+inputComponent.propTypes = {
+  inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+};
 
 function Control(props) {
   return (
@@ -93,6 +106,13 @@ function Control(props) {
   );
 }
 
+Control.propTypes = {
+  children: PropTypes.node,
+  innerProps: PropTypes.object,
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  selectProps: PropTypes.object.isRequired,
+};
+
 function Option(props) {
   return (
     <MenuItem
@@ -109,6 +129,14 @@ function Option(props) {
   );
 }
 
+Option.propTypes = {
+  children: PropTypes.node,
+  innerProps: PropTypes.object,
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  isFocused: PropTypes.bool,
+  isSelected: PropTypes.bool,
+};
+
 function Placeholder(props) {
   return (
     <Typography
@@ -121,6 +149,12 @@ function Placeholder(props) {
   );
 }
 
+Placeholder.propTypes = {
+  children: PropTypes.node,
+  innerProps: PropTypes.object,
+  selectProps: PropTypes.object.isRequired,
+};
+
 function SingleValue(props) {
   return (
     <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
@@ -129,16 +163,27 @@ function SingleValue(props) {
   );
 }
 
+SingleValue.propTypes = {
+  children: PropTypes.node,
+  innerProps: PropTypes.object,
+  selectProps: PropTypes.object.isRequired,
+};
+
 function ValueContainer(props) {
   return <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
 }
+
+ValueContainer.propTypes = {
+  children: PropTypes.node,
+  selectProps: PropTypes.object.isRequired,
+};
 
 function MultiValue(props) {
   return (
     <Chip
       tabIndex={-1}
       label={props.children}
-      className={classNames(props.selectProps.classes.chip, {
+      className={clsx(props.selectProps.classes.chip, {
         [props.selectProps.classes.chipFocused]: props.isFocused,
       })}
       onDelete={props.removeProps.onClick}
@@ -147,6 +192,13 @@ function MultiValue(props) {
   );
 }
 
+MultiValue.propTypes = {
+  children: PropTypes.node,
+  isFocused: PropTypes.bool,
+  removeProps: PropTypes.object.isRequired,
+  selectProps: PropTypes.object.isRequired,
+};
+
 function Menu(props) {
   return (
     <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
@@ -154,6 +206,12 @@ function Menu(props) {
     </Paper>
   );
 }
+
+Menu.propTypes = {
+  children: PropTypes.node,
+  innerProps: PropTypes.object,
+  selectProps: PropTypes.object,
+};
 
 const components = {
   Control,
@@ -166,59 +224,48 @@ const components = {
   ValueContainer,
 };
 
-class DSAReactSelect extends React.Component {
-  render() {
-    const { classes,
-      theme,
-      options,
-      onChange,
-      selected,
-      placeholder,
-      label,
-      name,
-      multi
-    } = this.props;
+function DSAReactSelect(props){
+  const classes = useStyles();
+  const theme = useTheme();
+  const {name, label, multi, options, selected, onChange, placeholder} = props;
 
-    const selectStyles = {
-      input: base => ({
-        ...base,
-        color: theme.palette.text.primary,
-        '& input': {
-          font: 'inherit',
-        },
-      }),
-    };
+  const selectStyles = {
+    input: base => ({
+      ...base,
+      color: theme.palette.text.primary,
+      '& input': {
+        font: 'inherit',
+      },
+    }),
+  };
 
-    return (
-      <div className={classes.root} id={name}>
-        <NoSsr>
-          <Select
-            classes={classes}
-            styles={selectStyles}
-            textFieldProps={{
-              label: label,
-              InputLabelProps: {
-                shrink: true,
-              },
-            }}
-            options={options}
-            components={components}
-            value={selected}
-            onChange={onChange}
-            placeholder={placeholder}
-            isMulti={multi}
-          />
-        </NoSsr>
-      </div>
-    );
-  }
+  return (
+    <div className={classes.root} id={name}>
+      <NoSsr>
+        <Select
+          classes={classes}
+          styles={selectStyles}
+          textFieldProps={{
+            label: label,
+            InputLabelProps: {
+              shrink: true,
+            },
+          }}
+          options={options}
+          components={components}
+          value={selected}
+          onChange={onChange}
+          placeholder={placeholder}
+          isMulti={multi}
+        />
+      </NoSsr>
+    </div>
+  );
 }
 
 DSAReactSelect.propTypes = {
-  classes: PropTypes.object.isRequired,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
-
 };
 
-export default withStyles(styles, { withTheme: true })(DSAReactSelect);
+export default DSAReactSelect;
