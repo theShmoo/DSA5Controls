@@ -33,7 +33,6 @@ class DSASwitch extends React.Component {
               classes={{
                 switchBase: classes.switchBase,
                 checked: classes.checked,
-                bar: classes.bar,
               }}
               color="primary"
             />
