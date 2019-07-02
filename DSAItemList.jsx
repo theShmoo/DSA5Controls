@@ -23,7 +23,10 @@ const styles = theme => ({
 
 function LeafItem(props) {
   const {item} = props;
-  return (<ListItem dense={true} divider={true} button onClick={item.action}>
+  return (<ListItem dense={true}
+          divider={true}
+          button={item.action ? true : false}
+          onClick={item.action}>
         <ListItemText secondary={item.name}>{item.value}</ListItemText>
       </ListItem>);
 }
