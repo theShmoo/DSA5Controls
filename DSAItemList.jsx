@@ -21,14 +21,23 @@ const styles = theme => ({
   }
 });
 
-function LeafItem(props) {
-  const {item} = props;
-  return (<ListItem dense={true}
+const LeafItem = ({item}) => {
+  const {action, name, value, dangerouslysetinnerhtml} = item;
+  return <ListItem dense={true}
           divider={true}
-          button={item.action ? true : false}
-          onClick={item.action}>
-        <ListItemText secondary={item.name}>{item.value}</ListItemText>
-      </ListItem>);
+          button={action ? true : false}
+          onClick={action}>
+        {dangerouslysetinnerhtml
+          ? <ListItemText secondary={name}>
+            <span dangerouslySetInnerHTML={{__html: value}} />
+          </ListItemText>
+          : <ListItemText secondary={name} primary={value} />
+        }
+      </ListItem>;
+}
+
+LeafItem.defaultProps = {
+  dangerouslysetinnerhtml: false,
 }
 
 class DSAItemList extends React.Component {
@@ -96,7 +105,7 @@ class DSAItemList extends React.Component {
 DSAItemList.propTypes = {
   classes: PropTypes.object.isRequired,
   items: PropTypes.array.isRequired,
-  title: PropTypes.string
+  title: PropTypes.string,
 };
 
 export default withStyles(styles)(DSAItemList);
